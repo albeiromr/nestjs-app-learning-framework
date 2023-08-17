@@ -1,17 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Header, Redirect, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Header, Redirect, Query, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Request } from 'express';
+import { HttpFooFilter } from './filters/http-foo.filter';
 
 @Controller({host: "localhost", path: 'api/products'}) // solo se responderan solicitudes de "localhost"
 export class ProductsController {
 
-
-
   constructor(private readonly productsService: ProductsService) { }
-
-
 
   // ejemplo de endpoint post con headers y acceso al request
   @Post("headers-example")
@@ -30,6 +27,7 @@ export class ProductsController {
   }
 
 
+  // ejemplo de post con acceso al body
   @Post("create-product")
   handleCreateProduct(@Body() createProductDto: CreateProductDto){
     const result = this.productsService.foo3(createProductDto);
@@ -42,6 +40,25 @@ export class ProductsController {
   @Redirect() // indica que la ruta realizará una redirección
   handleRedirect() {
     return { url: "https://docs.nestjs.com", statusCode: 301}; // indica la url y código de la retirección
+  }
+
+  // ejemplo de get que lanza un error por algun motvo
+  @Get("throw-error")
+  handleThrowError(){
+    // enviar siempre los errores usando la clase HttpExeption o una clase que herede de ella y HttpStatus
+    // ver documentación https://docs.nestjs.com/exception-filters
+    // ojo!! también hay exeptions que ya vienen creados, ver documentación
+    throw new HttpException(
+      {
+        message: "forbidden", 
+        otherData: "other data...",
+        otherDatatwo: "other data 2..."
+      },
+      HttpStatus.FORBIDDEN,
+      {
+        cause: new Error("este fué el error")
+      }
+    );
   }
 
 
