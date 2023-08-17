@@ -13,52 +13,54 @@ export class ProductsController {
 
 
 
-  //ejemplo de post
-  @Post()
+  // ejemplo de endpoint post con headers y acceso al request
+  @Post("headers-example")
   @Header('Cache-Control', 'none') // agrega un header adicional a la respuesta
   @Header('otro-header', 'valor-otro-header') // agrega un header adicional a la respuesta
-  createProduct(@Req() request: Request, @Body() createProductDto: CreateProductDto) {
-    if (request.hostname === "localhost") return this.productsService.create(request, createProductDto);
-    else return "host no valido"
+  handleHeadersExample(@Req() request: Request) {
+    if (request.hostname === "localhost") return this.productsService.foo1(request);
+    else return "host no valido";
   }
 
+  // ejemlo de endpoint get con petición asyncrona con async y await
+  @Get("get-async-data")
+  async handleGetAsyncData(): Promise<[]> {
+    const data = await this.productsService.foo2();
+    return data;
+  }
+
+
+  @Post("create-product")
+  handleCreateProduct(@Body() createProductDto: CreateProductDto){
+    const result = this.productsService.foo3(createProductDto);
+    return result;
+  }
 
 
   //ejemplo de redirección
   @Get("redirect")
   @Redirect() // indica que la ruta realizará una redirección
-  RedirectUser() {
-    return { url: "https://docs.nestjs.com", statusCode: 301} // indica la url y código de la retirección
+  handleRedirect() {
+    return { url: "https://docs.nestjs.com", statusCode: 301}; // indica la url y código de la retirección
   }
 
 
-
-  //ejemlo de endpoint con petición asyncrona con async y await
-  @Get("get-async-data")
-  async handleAsyncData(): Promise<[]> {
-    const fetchedData = await fetch("https://jsonplaceholder.typicode.com/users")
-    const data = await fetchedData.json()
-    return data
-  }
-
-
-
-  @Get(':id')
+  /* @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productsService.findOne(Number(id));
-  }
+  } */
 
 
 
-  @Patch(':id')
+  /* @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productsService.update(+id, updateProductDto);
-  }
+  } */
 
 
 
-  @Delete(':id')
+  /* @Delete(':id')
   remove(@Param('id') id: string) {
     return this.productsService.remove(+id);
-  }
+  } */
 }

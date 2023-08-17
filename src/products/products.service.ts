@@ -6,23 +6,33 @@ import { Request } from 'express';
 @Injectable()
 export class ProductsService {
   
-  create(request: Request, createProductDto: CreateProductDto) {
-    return `El producto ${createProductDto.productName} fué creado con exito`;
+  foo1(request: Request): string {
+    return `El producto ${request.body.productName} fué creado con exito`;
   }
 
-  findAll() {
+  async foo2(): Promise<[]>{
+    const fetchedData = await fetch("https://jsonplaceholder.typicode.com/users");
+    const data = await fetchedData.json();
+    return data;
+  }
+
+  foo3(data: CreateProductDto): string{
+    return `Se ha creado el siguiente ${data.productName}, de la marca ${data.productBrand} y precio ${data.price}`;
+  }
+
+  /* findAll() {
     return `This action returns all products`;
-  }
+  } */
 
-  findOne(id: number) {
+  /* findOne(id: number) {
     return `This action returns a #${id} product`;
-  }
+  } */
 
-  update(id: number, updateProductDto: UpdateProductDto) {
+  /* update(id: number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
-  }
+  } */
 
-  remove(id: number) {
+  /* remove(id: number) {
     return `This action removes a #${id} product`;
-  }
+  } */
 }
