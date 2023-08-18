@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Header, Redirect, Query, HttpException, HttpStatus, UseFilters } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Header, Redirect, Query, HttpException, HttpStatus, UseFilters, ParseIntPipe, ParseFloatPipe } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Request } from 'express';
 import { HttpFooFilter } from './filters/http-foo.filter';
+import { FindOneParams } from './params/find-one.params';
 
 @Controller({host: "localhost", path: 'api/products'}) // solo se responderan solicitudes de "localhost"
 export class ProductsController {
@@ -25,15 +26,6 @@ export class ProductsController {
     const data = await this.productsService.foo2();
     return data;
   }
-
-
-  // ejemplo de post con acceso al body
-  @Post("create-product")
-  handleCreateProduct(@Body() createProductDto: CreateProductDto){
-    const result = this.productsService.foo3(createProductDto);
-    return result;
-  }
-
 
   //ejemplo de redirección
   @Get("redirect")
@@ -62,10 +54,26 @@ export class ProductsController {
   }
 
 
-  /* @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOne(Number(id));
-  } */
+  // ejemplo con implementación de un pipe, los pipes se ejecutan antes que el handler
+  // existen muchos mas pipes de validación, ver documentación: https://docs.nestjs.com/pipes
+
+  // ejemplo de validación de los parámetros mediante el pipe ValidationPipe y class-validator
+  // leer documentación: https://docs.nestjs.com/pipes#class-validator
+  // leer también: https://docs.nestjs.com/techniques/validation
+  @Get(':id')
+  findOne(@Param() params: FindOneParams) {
+    return this.productsService.foo4(params.id);
+  }
+
+
+  // ejemplo de validación del body mediante el pipe ValidationPipe y class-validator
+  // leer documentación: https://docs.nestjs.com/pipes#class-validator
+  // leer también: https://docs.nestjs.com/techniques/validation
+  @Post("create-product")
+  handleCreateProduct(@Body() createProductDto: CreateProductDto){
+    const result = this.productsService.foo3(createProductDto);
+    return result;
+  }
 
 
 

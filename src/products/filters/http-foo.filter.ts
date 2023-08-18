@@ -14,7 +14,7 @@ export class HttpFooFilter implements ExceptionFilter {
     const newLoggerEntry = {
       status: status,
       data: exception.getResponse(),
-      cause: exception.cause
+      cause: exception.cause || null
     }
     console.log(newLoggerEntry)
     //-----------------------------------------------------------------

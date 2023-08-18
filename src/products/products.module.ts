@@ -3,7 +3,7 @@ import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
 import { LoggerMiddleware } from './middlewares/logger.middelware';
 import { GlobalMessageMiddleware } from './middlewares/global-message.middleware';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER} from '@nestjs/core';
 import { HttpFooFilter } from './filters/http-foo.filter';
 
 @Module({
@@ -15,7 +15,7 @@ import { HttpFooFilter } from './filters/http-foo.filter';
       provide: APP_FILTER,
       useClass: HttpFooFilter,
     },
-  ],
+  ]
 })
 //agregando los middlewares, debemos implementr NestModule
 export class ProductsModule implements NestModule{

@@ -20,13 +20,15 @@ export class ProductsService {
     return `Se ha creado el siguiente ${data.productName}, de la marca ${data.productBrand} y precio ${data.price}`;
   }
 
+  foo4(id: number): string {
+    return `This action returns a #${id} product`;
+  }
+
   /* findAll() {
     return `This action returns all products`;
   } */
 
-  /* findOne(id: number) {
-    return `This action returns a #${id} product`;
-  } */
+  
 
   /* update(id: number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
