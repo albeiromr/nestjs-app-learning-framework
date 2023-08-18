@@ -1,20 +1,28 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { ProductsService } from './products.service';
-import { ProductsController } from './products.controller';
+import { ProductsService } from './services/products.service';
+import { ProductsController } from './controllers/products.controller';
 import { LoggerMiddleware } from './middlewares/logger.middelware';
 import { GlobalMessageMiddleware } from './middlewares/global-message.middleware';
-import { APP_FILTER} from '@nestjs/core';
+import { APP_FILTER, APP_GUARD} from '@nestjs/core';
 import { HttpFooFilter } from './filters/http-foo.filter';
+import { AuthorizationGuard } from './guards/authorization.guard';
+import { AuthorizationService } from './services/authorization.service';
 
 @Module({
   controllers: [ProductsController],
   providers: [
     ProductsService,
+    AuthorizationService,
     // agregando estrategia de manejo de errores
     {
       provide: APP_FILTER,
       useClass: HttpFooFilter,
     },
+    // agregando guard de autorización
+    {
+      provide: APP_GUARD,
+      useClass: AuthorizationGuard,
+    }
   ]
 })
 //agregando los middlewares, debemos implementr NestModule

@@ -1,11 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Header, Redirect, Query, HttpException, HttpStatus, UseFilters, ParseIntPipe, ParseFloatPipe } from '@nestjs/common';
-import { ProductsService } from './products.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { ProductsService } from '../services/products.service';
+import { CreateProductDto } from '../dto/create-product.dto';
+import { UpdateProductDto } from '../dto/update-product.dto';
 import { Request } from 'express';
-import { HttpFooFilter } from './filters/http-foo.filter';
-import { FindOneParams } from './params/find-one.params';
-import { UpdateParams } from './params/update.params';
+import { FindOneParams } from '../params/find-one.params';
+import { UpdateParams } from '../params/update.params';
 
 @Controller({host: "localhost", path: 'api/products'}) // solo se responderan solicitudes de "localhost"
 export class ProductsController {
