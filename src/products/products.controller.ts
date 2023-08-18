@@ -5,6 +5,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Request } from 'express';
 import { HttpFooFilter } from './filters/http-foo.filter';
 import { FindOneParams } from './params/find-one.params';
+import { UpdateParams } from './params/update.params';
 
 @Controller({host: "localhost", path: 'api/products'}) // solo se responderan solicitudes de "localhost"
 export class ProductsController {
@@ -53,7 +54,6 @@ export class ProductsController {
     );
   }
 
-
   // ejemplo con implementación de un pipe, los pipes se ejecutan antes que el handler
   // existen muchos mas pipes de validación, ver documentación: https://docs.nestjs.com/pipes
 
@@ -65,7 +65,6 @@ export class ProductsController {
     return this.productsService.foo4(params.id);
   }
 
-
   // ejemplo de validación del body mediante el pipe ValidationPipe y class-validator
   // leer documentación: https://docs.nestjs.com/pipes#class-validator
   // leer también: https://docs.nestjs.com/techniques/validation
@@ -75,17 +74,15 @@ export class ProductsController {
     return result;
   }
 
+  // ejemplo de update con validación de un DTO hecho solo para updates y validación de params
+  @Patch(':id')
+  update(@Param() params: UpdateParams, @Body() updateProductDto: UpdateProductDto) {
+    return this.productsService.foo5(params.id, updateProductDto);
+  }
 
 
-  /* @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
-  } */
-
-
-
-  /* @Delete(':id')
+  @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
-  } */
+    return this.productsService.foo6(+id);
+  }
 }

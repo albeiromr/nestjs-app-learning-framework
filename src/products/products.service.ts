@@ -24,17 +24,11 @@ export class ProductsService {
     return `This action returns a #${id} product`;
   }
 
-  /* findAll() {
-    return `This action returns all products`;
-  } */
-
-  
-
-  /* update(id: number, updateProductDto: UpdateProductDto) {
+  foo5(id: number, updateProductDto: UpdateProductDto) {
     return `This action updates a #${id} product`;
-  } */
+  }
 
-  /* remove(id: number) {
+  foo6(id: number) {
     return `This action removes a #${id} product`;
-  } */
+  }
 }
