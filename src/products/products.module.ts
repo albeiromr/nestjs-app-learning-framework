@@ -11,8 +11,18 @@ import { RolesService } from './services/roles.service';
 import { RolesGuard } from './guards/roles.guard';
 import { LogInteractionInterceptor } from './Interceptors/log-interaction.interceptor';
 import { TimeoutInterceptor } from './Interceptors/timeout.interceptor';
+import { ConfigModule } from '@nestjs/config';
+import { configuration } from './config/configuration';
 
 @Module({
+  imports: [
+    ConfigModule.forRoot(
+      {
+        envFilePath: `./config/env/${process.env.NODE_ENV}.env`,
+        load: [configuration] 
+      }
+    ) // agregando configuración para variables de entorno
+  ],
   controllers: [ProductsController],
   providers: [
     ProductsService,

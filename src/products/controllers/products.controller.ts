@@ -7,11 +7,16 @@ import { FindOneParams } from '../params/find-one.params';
 import { UpdateParams } from '../params/update.params';
 import { Roles } from '../decorators/roles.decorator';
 import { DeleteOneParams } from '../params/delete-one.params';
+import { ConfigService } from '@nestjs/config';
+import { ConfigurationModel } from '../models/configuration.model';
 
 @Controller({host: "localhost", path: 'api/products'}) // solo se responderan solicitudes de "localhost"
 export class ProductsController {
 
-  constructor(private readonly productsService: ProductsService) { }
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly configService: ConfigService
+  ) { }
 
   // ejemplo de endpoint post con headers y acceso al request
   @Post("headers-example")
@@ -86,5 +91,12 @@ export class ProductsController {
   @Roles('admin') // el guard de roles solo permitira a los request que traigan este role acceder al handler
   remove(@Param() deleteOneParams: DeleteOneParams) {
     return this.productsService.foo6(deleteOneParams.id);
+  }
+
+  //Ejemplo de Post con acceso a variables de entorno
+  @Post('show-environment-variables')
+  handleShowEnvironmentVariables(){
+    const jwtConfig: ConfigurationModel['jwt'] = this.configService.get<ConfigurationModel['jwt']>('jwt');
+    return jwtConfig;
   }
 }
