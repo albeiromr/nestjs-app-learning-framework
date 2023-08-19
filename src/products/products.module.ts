@@ -7,12 +7,15 @@ import { APP_FILTER, APP_GUARD} from '@nestjs/core';
 import { HttpFooFilter } from './filters/http-foo.filter';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { AuthorizationService } from './services/authorization.service';
+import { RolesService } from './services/roles.service';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   controllers: [ProductsController],
   providers: [
     ProductsService,
     AuthorizationService,
+    RolesService,
     // agregando estrategia de manejo de errores
     {
       provide: APP_FILTER,
@@ -22,6 +25,11 @@ import { AuthorizationService } from './services/authorization.service';
     {
       provide: APP_GUARD,
       useClass: AuthorizationGuard,
+    },
+    // agregando guard de roles
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     }
   ]
 })

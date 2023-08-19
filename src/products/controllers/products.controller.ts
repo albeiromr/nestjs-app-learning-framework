@@ -5,6 +5,8 @@ import { UpdateProductDto } from '../dto/update-product.dto';
 import { Request } from 'express';
 import { FindOneParams } from '../params/find-one.params';
 import { UpdateParams } from '../params/update.params';
+import { Roles } from '../decorators/roles.decorator';
+import { DeleteOneParams } from '../params/delete-one.params';
 
 @Controller({host: "localhost", path: 'api/products'}) // solo se responderan solicitudes de "localhost"
 export class ProductsController {
@@ -75,13 +77,14 @@ export class ProductsController {
 
   // ejemplo de update con validación de un DTO hecho solo para updates y validación de params
   @Patch(':id')
-  update(@Param() params: UpdateParams, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.foo5(params.id, updateProductDto);
+  update(@Param() updateParams: UpdateParams, @Body() updateProductDto: UpdateProductDto) {
+    return this.productsService.foo5(updateParams.id, updateProductDto);
   }
 
-
+  // ejemplo de delete con validación de roles usando un guard
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productsService.foo6(+id);
+  @Roles('admin') // el guard de roles solo permitira a los request que traigan este role acceder al handler
+  remove(@Param() deleteOneParams: DeleteOneParams) {
+    return this.productsService.foo6(deleteOneParams.id);
   }
 }
