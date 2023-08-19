@@ -8,10 +8,14 @@ import { tap } from 'rxjs/operators';
 // toma en ejecutarse y logueamos ese tiempo en consola.
 
 // si una exepción es lanzada desde el handler, la lógica que se ejecuta después del handler
-// ya no se ejecutará
+// ya no se ejecutará a menos que se use un catcherror() de rxjs, dicho ejemplo se puede ver
+// en la documentación de los interceptores.
 
-// los interceptors también sirven para mutar la respuesta que el handler retorna y enviar la 
-// respuesta mutada al usuario
+// los interceptors también sirven para:
+//   - mutar la respuesta que el handler retorna y enviar la respuesta mutada al usuario
+//   - manejar errores con catchError() de rxjs
+//   - manejo de cache, (ver documentación de interceptors)
+//   - manejo de timeouts en las peticiones
 
 // documentación de los interceptor en https://docs.nestjs.com/interceptors
 @Injectable()

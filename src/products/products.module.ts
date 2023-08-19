@@ -42,7 +42,7 @@ import { TimeoutInterceptor } from './Interceptors/timeout.interceptor';
     {
       provide: APP_INTERCEPTOR,
       useClass: TimeoutInterceptor,
-    }
+    },
   ]
 })
 //agregando los middlewares, debemos implementr NestModule
