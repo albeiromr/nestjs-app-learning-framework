@@ -10,5 +10,5 @@ export class AuthorizationService {
         // la lógica de validación va aquí
 
         return true
-    } // si se retorna false el guard no permite consumir el endpoint y arroja un 403
+    } // si se retorna false el guard no permite consumir el endpoint y arroja la excepción que hallamos lanzado desde el guard
 }
