@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { ProductsModule } from './products/products.module';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ProductsModule);
+  const app = await NestFactory.create(AppModule);
 
   // global validation pipe, valida dtos, params y tipos de datos declarados en las firmas de los handlers
   app.useGlobalPipes( new ValidationPipe({
