@@ -1,22 +1,19 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
-import { ProductsModule } from './products/products.module';
-import { GlobalMessageMiddleware } from './products/middlewares/global-message.middleware';
-import { LoggerMiddleware } from './products/middlewares/logger.middelware';
-import { ProductsController } from './products/controllers/products.controller';
+import { ProductsModule } from './modules/products/products.module';
+import { GlobalMessageMiddleware } from './middlewares/global-message.middleware';
+import { LoggerMiddleware } from './middlewares/logger.middelware';
+import { ProductsController } from './modules/products/controllers/products.controller';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
-import { AuthorizationGuard } from './products/guards/authorization.guard';
-import { RolesGuard } from './products/guards/roles.guard';
-import { HttpFooFilter } from './products/filters/http-foo.filter';
-import { LogInteractionInterceptor } from './products/Interceptors/log-interaction.interceptor';
-import { TimeoutInterceptor } from './products/Interceptors/timeout.interceptor';
+import { AuthorizationGuard } from './guards/authorization.guard';
+import { RolesGuard } from './guards/roles.guard';
+import { HttpFooFilter } from './filters/http-foo.filter';
+import { LogInteractionInterceptor } from './Interceptors/log-interaction.interceptor';
+import { TimeoutInterceptor } from './Interceptors/timeout.interceptor';
 import { ConfigModule } from '@nestjs/config';
-import { configuration } from './products/config/configuration';
-import { validationSchema } from './products/config/validation';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from './products/entities/product.entity';
-import { ProductsService } from './products/services/products.service';
-import { AuthorizationService } from './products/services/authorization.service';
-import { RolesService } from './products/services/roles.service';
+import { configuration } from './config/configuration';
+import { validationSchema } from './config/validation';
+import { AuthorizationService } from './services/authorization.service';
+import { RolesService } from './services/roles.service';
 
 @Module({
     imports: [
@@ -24,7 +21,7 @@ import { RolesService } from './products/services/roles.service';
         ConfigModule.forRoot( // agregando configuración para variables de entorno
             {
                 //envFile es la ubicación de los archivos terminados en .env
-                envFilePath: `${process.cwd()}/src/products/config/env/${process.env.NODE_ENV}.env`,
+                envFilePath: `${process.cwd()}/src/config/env/${process.env.NODE_ENV}.env`,
                 // configuration es el archivo que toma las variables desde los archivos .env
                 // y los combierte en un objeto javascript que pueda ser consumido con el configuration service
                 load: [configuration],
@@ -37,6 +34,8 @@ import { RolesService } from './products/services/roles.service';
         ) 
     ],
     providers: [
+        AuthorizationService,
+        RolesService,
         // agregando estrategia de manejo de errores
         {
             provide: APP_FILTER,
@@ -65,6 +64,7 @@ import { RolesService } from './products/services/roles.service';
     ]
 })
 export class AppModule implements NestModule {
+    //agregando los middlewares, debemos implementr NestModule
 
     // el metodo configure es donde declaramos todos los middlewares
     configure(consumer: MiddlewareConsumer) {
@@ -78,5 +78,5 @@ export class AppModule implements NestModule {
             'api/foo3/(.*)', //esta ruta tambien se excluye
         )
         .forRoutes(ProductsController);
-    } 
+    }
 }

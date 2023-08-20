@@ -1,4 +1,4 @@
-import { ConfigurationModel } from "../models/configuration.model";
+import { ConfigurationModel } from "./configuration.model";
 
 
 export const configuration = (): ConfigurationModel => ({

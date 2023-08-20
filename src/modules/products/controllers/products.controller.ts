@@ -5,10 +5,10 @@ import { UpdateProductDto } from '../dto/update-product.dto';
 import { Request } from 'express';
 import { FindOneParams } from '../params/find-one.params';
 import { UpdateParams } from '../params/update.params';
-import { Roles } from '../decorators/roles.decorator';
+import { Roles } from '../../../decorators/roles.decorator';
 import { DeleteOneParams } from '../params/delete-one.params';
 import { ConfigService } from '@nestjs/config';
-import { ConfigurationModel } from '../models/configuration.model';
+import { ConfigurationModel } from '../../../config/configuration.model';
 
 @Controller({host: "localhost", path: 'api/products'}) // solo se responderan solicitudes de "localhost"
 export class ProductsController {
