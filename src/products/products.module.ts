@@ -13,15 +13,22 @@ import { LogInteractionInterceptor } from './Interceptors/log-interaction.interc
 import { TimeoutInterceptor } from './Interceptors/timeout.interceptor';
 import { ConfigModule } from '@nestjs/config';
 import { configuration } from './config/configuration';
+import { validationSchema } from './config/validation';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(
+    ConfigModule.forRoot( // agregando configuración para variables de entorno
       {
-        envFilePath: `./config/env/${process.env.NODE_ENV}.env`,
-        load: [configuration] 
+        //envFile es la ubicación de los archivos terminados en .env
+        envFilePath: `${process.cwd()}/src/products/config/env/${process.env.NODE_ENV}.env`,
+        // configuration es el archivo que toma las variables desde los archivos .env
+        // y los combierte en un objeto javascript que pueda ser consumido con el configuration service
+        load: [configuration],
+        // validation esquema es el esquema de validación que verifica que en los archivos .env
+        // las variables estén escritas correctamente, se usa la libería joi.
+        validationSchema
       }
-    ) // agregando configuración para variables de entorno
+    ) 
   ],
   controllers: [ProductsController],
   providers: [
