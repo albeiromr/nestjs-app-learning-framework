@@ -30,36 +30,18 @@ import { validationSchema } from './config/validation';
       }
     ) 
   ],
-  controllers: [ProductsController],
+  controllers: [
+    ProductsController
+  ],
   providers: [
     ProductsService,
     AuthorizationService,
     RolesService,
-    // agregando estrategia de manejo de errores
-    {
-      provide: APP_FILTER,
-      useClass: HttpFooFilter,
-    },
-    // agregando guard de autorización
-    {
-      provide: APP_GUARD,
-      useClass: AuthorizationGuard,
-    },
-    // agregando guard de roles
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-    // agregando interceptor para loggeo de actividad
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: LogInteractionInterceptor,
-    },
-    // agregando interceptor timeout en peticiones http
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: TimeoutInterceptor,
-    },
+  ], 
+  exports: [
+    ProductsService,
+    AuthorizationService,
+    RolesService,
   ]
 })
 //agregando los middlewares, debemos implementr NestModule

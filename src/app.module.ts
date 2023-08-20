@@ -14,10 +14,40 @@ import { configuration } from './products/config/configuration';
 import { validationSchema } from './products/config/validation';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Product } from './products/entities/product.entity';
+import { ProductsService } from './products/services/products.service';
+import { AuthorizationService } from './products/services/authorization.service';
+import { RolesService } from './products/services/roles.service';
 
 @Module({
     imports: [
         ProductsModule
+    ],
+    providers: [
+        // agregando estrategia de manejo de errores
+        {
+            provide: APP_FILTER,
+            useClass: HttpFooFilter,
+        },
+        // agregando guard de autorización
+        {
+            provide: APP_GUARD,
+            useClass: AuthorizationGuard,
+        },
+        // agregando guard de roles
+        {
+            provide: APP_GUARD,
+            useClass: RolesGuard,
+        },
+        // agregando interceptor para loggeo de actividad
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: LogInteractionInterceptor,
+        },
+        // agregando interceptor timeout en peticiones http
+        {
+            provide: APP_INTERCEPTOR,
+            useClass: TimeoutInterceptor,
+        },
     ]
 })
 export class AppModule implements NestModule {
