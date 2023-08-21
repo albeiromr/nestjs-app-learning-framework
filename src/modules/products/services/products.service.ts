@@ -2,9 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
 import { Request } from 'express';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Product } from '../entities/product.entity';
 
 @Injectable()
 export class ProductsService {
+
+  constructor(
+    //injectando el repositorio de product desde la base de datos
+    @InjectRepository(Product)
+    private usersRepository: Repository<Product>
+
+  ){}
   
   foo1(request: Request): string {
     return `El producto ${request.body.productName} fué creado con exito`;
@@ -30,5 +40,20 @@ export class ProductsService {
 
   foo6(id: number) {
     return `This action removes a #${id} product`;
+  }
+
+  // encontrando todos los registros de la base de datos, tabla de productos
+  findAll():Promise<Product[]>{ 
+    return this.usersRepository.find();
+  }
+
+  // encontrando un solo registro de la base de datos, tabla de productos
+  findOne(id: number): Promise<Product | null> {
+    return this.usersRepository.findOneBy({ id });
+  }
+
+  // eliminar un solo registro de la base de datos, tabla de productos
+  async remove(id: number): Promise<void> {
+    await this.usersRepository.delete(id);
   }
 }

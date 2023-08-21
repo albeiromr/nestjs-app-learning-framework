@@ -15,6 +15,7 @@ import { validationSchema } from './config/validation';
 import { AuthorizationService } from './services/authorization.service';
 import { RolesService } from './services/roles.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Product } from './modules/products/entities/product.entity';
 
 @Module({
     imports: [
@@ -35,12 +36,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         ),
         TypeOrmModule.forRoot({ // agregando configuración de base de datos
             type: 'postgres',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: 'root',
-            database: 'test',
-            entities: [],
+            host: '0.0.0.0',
+            port: 7070,
+            username: 'admin',
+            password: '0710',
+            database: 'nest_learning',
+            // la opción de autoLoadEntities hace que cuando registramos una entidad en un modulo 
+            // hijo mediante TypeOrmModule.forFeature(entity), esa entidad se registre inmediatamente
+            // en la opciín entities:[] de este mismo objeto de configuración, de esa manera no hay
+            // que importar todas las entidades aquí en el app.module
+            autoLoadEntities: false,
             // la opción synchronize no debe estar en true en el ambiente productivo ya que borrará
             // todos los datos de la base de datos.
             synchronize: true,
