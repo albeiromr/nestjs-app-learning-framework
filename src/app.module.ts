@@ -46,9 +46,6 @@ import { Product } from './modules/products/entities/product.entity';
             // en la opciín entities:[] de este mismo objeto de configuración, de esa manera no hay
             // que importar todas las entidades aquí en el app.module
             autoLoadEntities: false,
-            // la opción synchronize no debe estar en true en el ambiente productivo ya que borrará
-            // todos los datos de la base de datos.
-            synchronize: true,
         }),
     ],
     providers: [
