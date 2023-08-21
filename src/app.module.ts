@@ -14,6 +14,7 @@ import { configuration } from './config/configuration';
 import { validationSchema } from './config/validation';
 import { AuthorizationService } from './services/authorization.service';
 import { RolesService } from './services/roles.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
     imports: [
@@ -31,7 +32,19 @@ import { RolesService } from './services/roles.service';
                 // haciendo que la configuración sea global en todos los modulos
                 isGlobal: true,
             }
-        ) 
+        ),
+        TypeOrmModule.forRoot({ // agregando configuración de base de datos
+            type: 'postgres',
+            host: 'localhost',
+            port: 3306,
+            username: 'root',
+            password: 'root',
+            database: 'test',
+            entities: [],
+            // la opción synchronize no debe estar en true en el ambiente productivo ya que borrará
+            // todos los datos de la base de datos.
+            synchronize: true,
+        }),
     ],
     providers: [
         AuthorizationService,
