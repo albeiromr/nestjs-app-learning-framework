@@ -45,7 +45,7 @@ import { Product } from './modules/products/entities/product.entity';
             // hijo mediante TypeOrmModule.forFeature(entity), esa entidad se registre inmediatamente
             // en la opciín entities:[] de este mismo objeto de configuración, de esa manera no hay
             // que importar todas las entidades aquí en el app.module
-            autoLoadEntities: false,
+            autoLoadEntities: true,
         }),
     ],
     providers: [
