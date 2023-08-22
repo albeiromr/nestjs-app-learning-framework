@@ -96,7 +96,7 @@ export class ProductsController {
   //Ejemplo de Post con acceso a variables de entorno
   @Post('show-environment-variables')
   handleShowEnvironmentVariables(){
-    const jwtConfig: ConfigurationModel['jwt'] = this.configService.get<ConfigurationModel['jwt']>('jwt');
+    const jwtConfig: ConfigurationModel['database'] = this.configService.get<ConfigurationModel['database']>('database');
     return jwtConfig;
   }
 }

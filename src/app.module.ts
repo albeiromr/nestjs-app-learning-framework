@@ -15,7 +15,6 @@ import { validationSchema } from './config/validation';
 import { AuthorizationService } from './services/authorization.service';
 import { RolesService } from './services/roles.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Product } from './modules/products/entities/product.entity';
 
 @Module({
     imports: [

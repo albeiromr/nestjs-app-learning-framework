@@ -7,7 +7,12 @@ export const validationSchema = Joi.object({
         'production',
         'staging',
     ),
-    JWT_SECRET: Joi.string().required(),
-    JWT_EXPIRES_IN: Joi.string().required(),
+    TYPE: Joi.string().required().valid(
+        'postgres'
+    ),
+    HOST: Joi.string().required(),
     PORT: Joi.number().required(),
+    USERNAME: Joi.string().required(),
+    PASSWORD: Joi.string().required(),
+    DATABASE: Joi.string().required(),
 });
