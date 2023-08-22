@@ -9,7 +9,7 @@ import { RolesGuard } from './guards/roles.guard';
 import { HttpFooFilter } from './filters/http-foo.filter';
 import { LogInteractionInterceptor } from './Interceptors/log-interaction.interceptor';
 import { TimeoutInterceptor } from './Interceptors/timeout.interceptor';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { configuration } from './config/configuration';
 import { validationSchema } from './config/validation';
 import { AuthorizationService } from './services/authorization.service';
@@ -33,18 +33,22 @@ import { TypeOrmModule } from '@nestjs/typeorm';
                 isGlobal: true,
             }
         ),
-        TypeOrmModule.forRoot({ // agregando configuración de base de datos
-            type: 'postgres',
-            host: '0.0.0.0',
-            port: 7070,
-            username: 'admin',
-            password: '0710',
-            database: 'nest_learning',
-            // la opción de autoLoadEntities hace que cuando registramos una entidad en un modulo 
-            // hijo mediante TypeOrmModule.forFeature(entity), esa entidad se registre inmediatamente
-            // en la opciín entities:[] de este mismo objeto de configuración, de esa manera no hay
-            // que importar todas las entidades aquí en el app.module
-            autoLoadEntities: true,
+        TypeOrmModule.forRootAsync({ // agregando configuración de base de datos
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (configService: ConfigService) => ({
+                type: configService.get<'postgres'>('database.type'),
+                host: configService.get<string>('database.host'),
+                port: configService.get<number>('database.port'),
+                username: configService.get<string>('database.username'),
+                password: configService.get<string>('database.password'),
+                database: configService.get<string>('database.database'),
+                // la opción de autoLoadEntities hace que cuando registramos una entidad en un modulo 
+                // hijo mediante TypeOrmModule.forFeature(entity), esa entidad se registre inmediatamente
+                // en la opciín entities:[] de este mismo objeto de configuración, de esa manera no hay
+                // que importar todas las entidades aquí en el app.module
+                autoLoadEntities: true,
+            })
         }),
     ],
     providers: [
