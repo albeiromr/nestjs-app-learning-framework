@@ -1,5 +1,4 @@
 export class ConfigurationModel {
-    node_env: string;
     database: {
         host: string;
         port: number;

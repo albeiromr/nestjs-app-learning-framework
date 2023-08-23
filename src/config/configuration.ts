@@ -1,8 +1,6 @@
 import { ConfigurationModel } from "./configuration.model";
 
-
 export const configuration = (): ConfigurationModel => ({
-    node_env: process.env.NODE_ENV,
     database: {
         host: process.env.HOST,
         port: parseInt(process.env.PORT, 10),
