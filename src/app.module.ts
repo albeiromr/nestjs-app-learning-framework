@@ -38,11 +38,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             inject: [ConfigService],
             useFactory: (configService: ConfigService) => ({
                 type: 'postgres',
-                host: configService.get<string>('database.host'),
-                port: configService.get<number>('database.port'),
-                username: configService.get<string>('database.username'),
-                password: configService.get<string>('database.password'),
-                database: configService.get<string>('database.database'),
+                host: configService.get<string>('database.DB_HOST'),
+                port: configService.get<number>('database.DB_PORT'),
+                username: configService.get<string>('database.DB_USERNAME'),
+                password: configService.get<string>('database.DB_PASSWORD'),
+                database: configService.get<string>('database.DB_DATABASE'),
                 // la opción de autoLoadEntities hace que cuando registramos una entidad en un modulo 
                 // hijo mediante TypeOrmModule.forFeature(entity), esa entidad se registre inmediatamente
                 // en la opciín entities:[] de este mismo objeto de configuración, de esa manera no hay
