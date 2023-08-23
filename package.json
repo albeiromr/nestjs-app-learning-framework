@@ -1,5 +1,5 @@
 {
-  "name": "app-curso-udemy",
+  "name": "app-learning-framework",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -8,17 +8,23 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-
     "start": "nest start",
-    "start:development": "cross-env NODE_ENV=development nest start --watch",
-    "start:staging": "cross-env NODE_ENV=staging node dist/main",
-    "start:production": "cross-env NODE_ENV=production node dist/main",
+    
+    "start:dev": "cross-env NODE_ENV=development nest start --watch",
+    "start:stage": "cross-env NODE_ENV=staging node dist/main",
+    "start:prod": "cross-env NODE_ENV=production node dist/main",
     "start:debug": "nest start --debug --watch",
 
     "typeorm": "npm run build && typeorm -d dist/database/data-source-options.js",
-    "migration:generate": "npm run typeorm -- migration:generate",
-    "migration:run": "npm run typeorm -- migration:run",
-    "migration:revert": "npm run typeorm -- migration:revert",
+    "generate:dev:migration": "cross-env NODE_ENV=development npm run typeorm -- migration:generate",
+    "run:dev:migration": "cross-env NODE_ENV=development npm run typeorm -- migration:run",
+    "revert:dev:migration": "cross-env NODE_ENV=development npm run typeorm -- migration:revert",
+    "generate:stage:migration": "cross-env NODE_ENV=staging npm run typeorm -- migration:generate",
+    "run:stage:migration": "cross-env NODE_ENV=staging npm run typeorm -- migration:run",
+    "revert:stage:migration": "cross-env NODE_ENV=staging npm run typeorm -- migration:revert",
+    "generate:prod:migration": "cross-env NODE_ENV=production npm run typeorm -- migration:generate",
+    "run:prod:migration": "cross-env NODE_ENV=production npm run typeorm -- migration:run",
+    "revert:dprod:migration": "cross-env NODE_ENV=production npm run typeorm -- migration:revert",
 
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
