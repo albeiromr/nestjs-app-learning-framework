@@ -13,11 +13,9 @@ const dataSourceOptions: DataSourceOptions = {
     password: process.env.PASSWORD,
     database: process.env.DATABASE,
     entities: ['dist/**/*.entity.js'],
-    migrations: ['dist/database/migrations/*.js'],
+    migrations: ['dist/migrations/*.js'],
     migrationsTableName: "migrations_typeorm",   
 }
-
-console.log(dataSourceOptions)
 
 const dataSource = new DataSource(dataSourceOptions);
 export default dataSource;

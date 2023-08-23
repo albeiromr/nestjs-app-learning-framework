@@ -15,7 +15,7 @@
     "start:prod": "cross-env NODE_ENV=prod node dist/main",
     "start:debug": "nest start --debug --watch",
 
-    "typeorm": "npm run build && typeorm -d dist/database/data-source-options.js",
+    "typeorm": "npm run build && typeorm -d dist/orm-cli/data-source-options.js",
     "generate:dev:migration": "cross-env NODE_ENV=dev npm run typeorm -- migration:generate",
     "run:dev:migration": "cross-env NODE_ENV=dev npm run typeorm -- migration:run",
     "revert:dev:migration": "cross-env NODE_ENV=dev npm run typeorm -- migration:revert",
