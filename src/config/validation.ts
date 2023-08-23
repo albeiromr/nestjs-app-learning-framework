@@ -7,9 +7,6 @@ export const validationSchema = Joi.object({
         'production',
         'staging',
     ),
-    TYPE: Joi.string().required().valid(
-        'postgres'
-    ),
     HOST: Joi.string().required(),
     PORT: Joi.number().required(),
     USERNAME: Joi.string().required(),
