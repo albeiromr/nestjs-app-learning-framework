@@ -12,13 +12,13 @@ Ojo!!, si se mueve la carpeta **migrations** de ubicación o se le cambia el nom
 
 ## Comandos para correr migraciones
 
-### crear migración
+### Crear migración
 
 para crear una nueva migración usamos el siguiente comando: **npm run generate:environmen_de_migracion:migration -- src/migrations/nombre_de_migracion**
 
 
 
-## Ejecutar migración
+### Ejecutar migración
 
 para ejecutar las migraciones usamos el siguiente comando: **npm run run:environmen_de_migracion:migration**
 
