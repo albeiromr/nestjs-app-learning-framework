@@ -15,10 +15,20 @@ import { validationSchema } from './config/validation';
 import { AuthorizationService } from './services/authorization.service';
 import { RolesService } from './services/roles.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './modules/auth/auth.module';
+import { AuthGuard } from './guards/auth.guard';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './modules/auth/constants';
 
 @Module({
     imports: [
         ProductsModule,
+        AuthModule,
+        JwtModule.register({ // agregando modulo para protección con tokens jwt
+            global: true,
+            secret: jwtConstants.secret,
+            signOptions: { expiresIn: '60s' },
+        }),
         ConfigModule.forRoot( // agregando configuración para variables de entorno
             {
                 //envFile es la ubicación de los archivos terminados en .env
@@ -68,6 +78,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         {
             provide: APP_GUARD,
             useClass: RolesGuard,
+        },
+        //agregando guard para jwt
+        {
+            provide: APP_GUARD,
+            useClass: AuthGuard,
         },
         // agregando interceptor para loggeo de actividad
         {
